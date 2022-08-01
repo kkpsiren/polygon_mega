@@ -6,7 +6,7 @@ from beautify import flipside_logo, discord_logo, set_bg_hack_url
 import os
 
 
-st.set_page_config(page_title="Assets Removed from Osmosis", layout="wide")
+st.set_page_config(page_title="Flipside Polygon Mega Dashboard", layout="wide")
 set_bg_hack_url()
 landing_page()
 
