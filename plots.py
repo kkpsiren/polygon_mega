@@ -50,13 +50,13 @@ def plot_active_addresses(df,x0='USERS_DOING_TRANSACTIONS',x1='MATIC_PRICE',x2='
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
     fig.add_trace(go.Bar(x=random_x, y=random_y0,
-                         offsetgroup=0,
-                         base=random_y2,
+                         #offsetgroup=0,
+                         #base=random_y2,
                         #mode='lines',
                         name=x0.capitalize().replace('_', ' ')),secondary_y=False)
 
     fig.add_trace(go.Bar(x=random_x, y=random_y2,
-                         offsetgroup=0,
+                         #offsetgroup=0,
                          #base=random_y0,
                         #mode='lines',
                         name=x2.capitalize().replace('_', ' ')),secondary_y=False)
