@@ -24,7 +24,7 @@ QUERY2 = """with new_poly_2020 as (
   select from_address as address , min(block_timestamp)::date as min_date, '2022' as type
   from flipside_prod_db.polygon.transactions
   group by address
-    having min_date >= '2022-01-01' and min_date <= '2022-05-29'
+    having min_date >= '2022-01-01' and min_date <= getdate()
 )  
   select count(address)/365 as new_address, type
   from new_poly_2020 group by  type
@@ -32,7 +32,7 @@ QUERY2 = """with new_poly_2020 as (
   select count(address)/365  as new_address,  type
   from new_poly_2021 group by  type
 	UNION
-  select count(address)/datediff(day, '2022-01-01', '2022-05-29') as new_address,  type
+  select count(address)/datediff(day, '2022-01-01', getdate()) as new_address,  type
   from new_poly_2022 group by  type"""
   
 QUERY3 = """WITH

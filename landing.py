@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from scripts import run_queries
+from scripts import load_queries
 from plots import * 
 #cm = sns.light_palette("green", as_cmap=True)
 #   with st.expander('show list'):
@@ -13,7 +13,7 @@ def landing_page():
 Powered by GodMode by FlipsideCrypto and ShroomDK""")
     
     with st.spinner(text="Fetching Data..."):
-        df,df2,df3,df4,df5,df6 = run_queries()
+        df,df2,df3,df4,df5,df6 = load_queries()
     
     
     l,r = st.columns(2)

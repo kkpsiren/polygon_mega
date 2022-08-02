@@ -6,9 +6,9 @@ import time
 from queries import *
 import os
 import pandas as pd 
-# from dotenv import load_dotenv
 
-# load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 
 
 
@@ -56,13 +56,38 @@ class Flipsider:
         return df
 
 st.cache()
+def load_queries():
+    df = pd.read_csv('query1.csv',index_col=0)
+    df2 = pd.read_csv('query2.csv',index_col=0)
+    df3 = pd.read_csv('query3.csv',index_col=0)
+    df4 = pd.read_csv('query4.csv',index_col=0)
+    df5 = pd.read_csv('query5.csv',index_col=0)
+    df6 = pd.read_csv('query6.csv',index_col=0)
+    return df,df2,df3,df4,df5,df6
+
+def save_queries(df,df2,df3,df4,df5,df6):
+    df.to_csv('query1.csv')
+    df2.to_csv('query2.csv')
+    df3.to_csv('query3.csv')
+    df4.to_csv('query4.csv')
+    df5.to_csv('query5.csv')
+    df6.to_csv('query6.csv')
+    return 'saved'
+
 def run_queries():
+    # so sloooow
     bot = Flipsider(os.getenv('API_KEY'))
     df = bot.run(QUERY)
+    print('1 done')
     df2 = bot.run(QUERY2)
+    print('2 done')
     df3 = bot.run(QUERY3)
+    print('3 done')
     df4 = bot.run(QUERY4)
+    print('4 done')
     df5 = bot.run(QUERY5)
+    print('5 done')
     df6 = bot.run(QUERY6)
+    print('6 done')
     return df,df2,df3,df4,df5,df6
 
