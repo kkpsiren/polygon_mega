@@ -63,11 +63,10 @@ Interestingly the recent positive upturn has not increased the active user base 
 
 #l,r = st.columns(2)
 #with l:
-    st.subheader('New Users')
+    st.subheader('Users')
     st.write('Daily new addresses and the cumulative total')
     st.plotly_chart(plot_new_addresses(df,x0='NEW_ADDRESS',x1='CUMULATIVE_ADDRESS'),use_container_width=True)
 #with r:
-    st.subheader('Active Users')
     st.write('Daily active addresses and the cumulative total with $MATIC Price')
     st.plotly_chart(plot_active_addresses(df4,x0='USERS_DOING_TRANSACTIONS',x1='MATIC_PRICE',x2='USERS_RECEIVING_TOKENS'),use_container_width=True)
 
