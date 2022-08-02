@@ -40,6 +40,7 @@ def plot_melt(df3):
 def plot_active_addresses(df,x0='USERS_DOING_TRANSACTIONS',x1='MATIC_PRICE',x2='USERS_RECEIVING_TOKENS'):
     #st.write(df.columns)
     df['DATE'] = pd.to_datetime(df['DATE'])
+    
     random_x = df['DATE'].tolist()
     random_y0 = df[x0].tolist()
     random_y1 = df[x1].tolist()
@@ -73,6 +74,7 @@ def plot_active_addresses(df,x0='USERS_DOING_TRANSACTIONS',x1='MATIC_PRICE',x2='
 def plot_marketcap(df,x0='MARKET_CAP',x1='MATIC_AVERAGE_PRICE',x2='CIRCULATING_SUPPLY'):
     df = df.sort_values('DATE')
     df['DATE']  =pd.to_datetime(df['DATE'])
+    df = df.sort_values('DATE')
     random_x = df['DATE'].tolist()
     random_y0 = df[x0].tolist()
     random_y1 = df[x1].tolist()
