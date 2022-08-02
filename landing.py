@@ -40,12 +40,14 @@ Interestingly the recent positive upturn has not increased the active user base 
 
 #l,r = st.columns(2)
 #with l:
-    st.subheader('Matic Price, Circulating Supply and Marketcap')
-    st.write('Overall status of the Polygon Financials')
+    st.subheader('Overall status of the Polygon Financials')
+    st.write('Matic Price, Circulating Supply and Marketcap')
+    
     st.plotly_chart(plot_marketcap(df5,x0='MARKET_CAP',x1='MATIC_AVERAGE_PRICE',x2='CIRCULATING_SUPPLY'),use_container_width=True)
 #with r:
-    st.subheader('Average Number of Transactions and Fees generated')
-    st.write('Overall status of the Polygon Network')
+    st.subheader('Overall status of the Polygon Network')
+    st.write('Average Number of Transactions and Fees generated')
+    
     st.plotly_chart(plot_fees(df6,x0='AVG_TXN',x2='FEES'),use_container_width=True)
 
     l,r = st.columns(2)
