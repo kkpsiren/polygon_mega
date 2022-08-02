@@ -2,10 +2,30 @@ import streamlit as st
 import pandas as pd
 from scripts import load_queries
 from plots import * 
+import datetime
 #cm = sns.light_palette("green", as_cmap=True)
 #   with st.expander('show list'):
 #        st.dataframe(data.sort_values(by='USD',ascending=False).style.background_gradient(cmap=cm))
         
+
+def get_change(ser,previous,what='NEW_ADDRESS'):
+    if what =='USER':
+        a = ser['USERS_DOING_TRANSACTIONS']+ser['USERS_RECEIVING_TOKENS']
+        b = previous['USERS_DOING_TRANSACTIONS']+previous['USERS_RECEIVING_TOKENS']
+        change = f"{((a.values[0] / b.values[0])-1)*100:.2f} %"
+        
+    else:
+        change = f"{((ser[what].values[0] / previous[what].values[0])-1)*100:.2f} %"
+    return change
+
+def merge_data(df,df4,df5,df6):
+    df5['DATE'] = pd.to_datetime(df5['DATE'])
+    df4['DATE'] = pd.to_datetime(df4['DATE'])
+    df6['DATE'] = pd.to_datetime(df6['DATE'])
+    df['MIN_DATE'] = pd.to_datetime(df['MIN_DATE'])
+    df_combined = df.merge(df4,left_on='MIN_DATE',right_on='DATE').merge(df5,on='DATE').merge(df6,on='DATE')
+    df_combined = df_combined.drop(['MIN_DATE','MATIC_AVERAGE_PRICE'],axis=1)
+    return df_combined.drop_duplicates()
 
 def landing_page():
     #st.image('https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/pstweatifgo8tmub5atc')
@@ -18,7 +38,7 @@ def landing_page():
     with st.spinner(text="Fetching Data..."):
         df,df2,df3,df4,df5,df6 = load_queries()
     
-    
+
     st.sidebar.markdown(
         """
 ## 👤 New Users 
@@ -77,7 +97,63 @@ Interestingly the recent positive upturn has not increased the active user base 
     st.plotly_chart(plot_holder(df5,x0='HOLDERS',x2='MARKET_CAP'),use_container_width=True)
 
 
-
+    st.subheader('Investigate Specific Dates')
+    df_combined = merge_data(df,df4,df5,df6)
+    
+    d = st.date_input(
+     "Select Date",value=datetime.datetime.today()-datetime.timedelta(days=1),min_value=df_combined['DATE'].min(),
+     max_value=datetime.datetime.today()-datetime.timedelta(days=1))
+    
+    ser = df_combined[df_combined['DATE']==pd.to_datetime(d)]
+    previous = df_combined[df_combined['DATE']==(pd.to_datetime(d) - datetime.timedelta(days=1))]
+    r = st.columns(3)
+    
+    
+    with r[0]:
+        label = 'New Users'
+        value = ser['NEW_ADDRESS'].values[0]
+        delta = get_change(ser,previous,what='NEW_ADDRESS')
+        st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    with r[1]:
+        label = 'Active Users'
+        value = (ser['USERS_DOING_TRANSACTIONS']+ser['USERS_RECEIVING_TOKENS']).values[0]
+        delta = get_change(ser,previous,what='USER')
+        st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    with r[2]:
+        label = 'Matic Holders'
+        value = ser['HOLDERS'].values[0]
+        delta = get_change(ser,previous,what='HOLDERS')
+        st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    
+    r = st.columns(3)
+    with r[0]:
+        label = 'MarketCap'
+        value = int(f"{ser['MARKET_CAP'].values[0]:.0f}")
+        delta = get_change(ser,previous,what='MARKET_CAP')
+        st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    with r[1]:
+        label = 'Circulating Supply'
+        value = int(f"{ser['CIRCULATING_SUPPLY'].values[0]:.0f}")
+        delta = get_change(ser,previous,what='CIRCULATING_SUPPLY')
+        st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    with r[2]:
+       label = 'MATIC avg Price'
+       value = float(f"{ser['MATIC_PRICE'].values[0]:.2f}")
+       delta = get_change(ser,previous,what='MATIC_PRICE')
+       st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    r = st.columns(3)
+    with r[0]:
+       label = 'Avg Hourly TX-rate'
+       value = ser['AVG_TXN'].values[0]
+       delta = get_change(ser,previous,what='AVG_TXN')
+       st.metric(label, value, delta=delta, delta_color="normal", help=None)
+    with r[1]:
+       label = 'AVG Fees'
+       value = int(f"{ser['FEES'].values[0]:.0f}")
+       delta = get_change(ser,previous,what='FEES')
+       st.metric(label, value, delta=delta, delta_color="normal", help=None)
+       
+       
 
     
     st.markdown(f""" 

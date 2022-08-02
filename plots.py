@@ -33,14 +33,14 @@ def plot_new_addresses(df,x0='NEW_ADDRESS',x1='CUMULATIVE_ADDRESS'):
 def plot_average_new_addresses_per_day(df2):
     fig =  px.bar(data_frame=df2.sort_values(by='TYPE'),x='TYPE',y='NEW_ADDRESS')
     fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-    #fig.update_traces(line=dict(width=1), opacity=.5)
+    fig.update_traces(opacity=.5)
     return fig
 
 def plot_melt(df3):
     df3 = df3.melt()
     fig =  px.bar(data_frame=df3,x='variable',y='value')
     fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)")
-    #fig.update_traces(line=dict(width=1), opacity=.5)
+    fig.update_traces(opacity=.5)
     return fig
 
 def plot_active_addresses(df,x0='USERS_DOING_TRANSACTIONS',x1='MATIC_PRICE',x2='USERS_RECEIVING_TOKENS'):
