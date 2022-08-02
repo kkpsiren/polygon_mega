@@ -9,8 +9,9 @@ from plots import *
 
 def landing_page():
     #st.image('https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/pstweatifgo8tmub5atc')
-    st.markdown("""## Polygon Mega 
-Powered by GodMode by FlipsideCrypto and ShroomDK""")
+    st.title("Polygon Megaboard")
+    st.write("Let's combine the previous Grand Prize Winners. 🏆 ")
+    st.write("Powered by GodMode by FlipsideCrypto and ShroomDK 🫡")
     
     with st.spinner(text="Fetching Data..."):
         df,df2,df3,df4,df5,df6 = load_queries()
