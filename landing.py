@@ -32,7 +32,7 @@ Most of the active users are active as they sending transcations and only every 
 
 ### Activity is linked with MATIC 🏃 🟰 🤑
 
-The overall activity of the userbase has dropped as the marketcap and MATIC price have fallen since the bear market.
+The overall activity of the userbase has dropped as the market cap and MATIC price have fallen since the bear market.
 Interestingly the recent positive upturn has not increased the active user base so far.  While the active userbase has peaked, the transaction fees when measured with MATIC stay constant. This is with the exception of few days. Interestingly the fees have stayed similar while the Average transaction count has dropped. 
     """)
     st.sidebar.write("""#### Powered by GodMode by FlipsideCrypto and ShroomDK 🫡""")
@@ -41,7 +41,7 @@ Interestingly the recent positive upturn has not increased the active user base 
 #l,r = st.columns(2)
 #with l:
     st.subheader('Overall status of the Polygon')
-    st.write('Matic Price, Circulating Supply and Marketcap')
+    st.write('Matic Price, Circulating Supply and Market cap')
     
     st.plotly_chart(plot_marketcap(df5,x0='MARKET_CAP',x1='MATIC_AVERAGE_PRICE',x2='CIRCULATING_SUPPLY'),use_container_width=True)
 #with r:
@@ -69,6 +69,12 @@ Interestingly the recent positive upturn has not increased the active user base 
 #with r:
     st.write('Daily active addresses and the cumulative total with $MATIC Price')
     st.plotly_chart(plot_active_addresses(df4,x0='USERS_DOING_TRANSACTIONS',x1='MATIC_PRICE',x2='USERS_RECEIVING_TOKENS'),use_container_width=True)
+
+    st.write('MATIC holders vs circulating supply')
+    st.plotly_chart(plot_holder(df5,x0='HOLDERS',x2='CIRCULATING_SUPPLY'),use_container_width=True)
+
+    st.write('MATIC holders vs market cap')
+    st.plotly_chart(plot_holder(df5,x0='HOLDERS',x2='MARKET_CAP'),use_container_width=True)
 
 
 
