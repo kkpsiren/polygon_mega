@@ -105,11 +105,14 @@ Interestingly the recent positive upturn has not increased the active user base 
      max_value=datetime.datetime.today()-datetime.timedelta(days=1))
     
     ser = df_combined[df_combined['DATE']==pd.to_datetime(d)]
+    if ser.shape[0] == 0:
+        ser = df_combined[df_combined['DATE']==pd.to_datetime('2022-08-03')]
     previous = df_combined[df_combined['DATE']==(pd.to_datetime(d) - datetime.timedelta(days=1))]
     r = st.columns(3)
     
     
     with r[0]:
+        st.write(ser)
         label = 'New Users'
         value = ser['NEW_ADDRESS'].values[0]
         delta = get_change(ser,previous,what='NEW_ADDRESS')
